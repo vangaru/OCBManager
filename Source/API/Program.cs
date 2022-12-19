@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using OCBManager.Data.Data;
+
 namespace OCBManager.API
 {
     public class Program
     {
+        private const string OCBConnectionString = "OCB";
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +17,9 @@ namespace OCBManager.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<OCBContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString(OCBConnectionString), 
+                    opts => opts.MigrationsAssembly("OCBManager.API")));
 
             var app = builder.Build();
 

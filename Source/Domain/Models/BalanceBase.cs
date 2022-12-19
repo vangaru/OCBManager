@@ -2,7 +2,7 @@
 
 namespace OCBManager.Domain.Models
 {
-    public class Turnover
+    public abstract class BalanceBase
     {
         private string? _id;
         private string? _billId;
@@ -10,25 +10,25 @@ namespace OCBManager.Domain.Models
 
         public string Id
         {
-            get => _id ?? throw new ApplicationException("Turnover.Id");
+            get => _id ?? throw new ApplicationException($"{GetType().Name} is not defined.");
             set => _id = value;
         }
 
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Debit { get; set; }
+        public decimal Active { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Credit { get; set; }
+        public decimal Passive { get; set; }
 
         public string BillId
         {
-            get => _billId ?? throw new ApplicationException("Turnover.BillId is not defined.");
+            get => _billId ?? throw new ApplicationException($"{GetType().Name} is not defined.");
             set => _billId = value;
         }
 
         public Bill Bill
         {
-            get => _bill ?? throw new ApplicationException("Turnover.Bill is not defined.");
+            get => _bill ?? throw new ApplicationException($"{GetType().Name} is not defined.");
             set => _bill = value;
         }
     }
