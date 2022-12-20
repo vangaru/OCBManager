@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -12,31 +11,13 @@ namespace OCBManager.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BillClasses",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IncomingBalanceActive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IncomingBalancePassive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TurnoverDebit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TurnoverCredit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OutgoingBalanceActive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OutgoingBalancePassive = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BillClasses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TurnoverSheets",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartOfThePeriod = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndOfThePeriod = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IncomingBalanceActive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IncomingBalancePassive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TurnoverDebit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -50,16 +31,42 @@ namespace OCBManager.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BillClasses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TurnoverSheetId = table.Column<int>(type: "int", nullable: false),
+                    IncomingBalanceActive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IncomingBalancePassive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TurnoverDebit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TurnoverCredit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OutgoingBalanceActive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OutgoingBalancePassive = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillClasses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BillClasses_TurnoverSheets_TurnoverSheetId",
+                        column: x => x.TurnoverSheetId,
+                        principalTable: "TurnoverSheets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bills",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BillNumber = table.Column<int>(type: "int", nullable: false),
-                    IncomingBalanceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OutgoingBalanceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TurnoverId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BillClassId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TurnoverSheetId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    IncomingBalanceId = table.Column<int>(type: "int", nullable: false),
+                    OutgoingBalanceId = table.Column<int>(type: "int", nullable: false),
+                    TurnoverId = table.Column<int>(type: "int", nullable: false),
+                    BillClassId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,22 +77,17 @@ namespace OCBManager.API.Migrations
                         principalTable: "BillClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bills_TurnoverSheets_TurnoverSheetId",
-                        column: x => x.TurnoverSheetId,
-                        principalTable: "TurnoverSheets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "IncomingBalances",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Active = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Passive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BillId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    BillId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,10 +104,11 @@ namespace OCBManager.API.Migrations
                 name: "OutgoingBalances",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Active = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Passive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BillId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    BillId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,10 +125,11 @@ namespace OCBManager.API.Migrations
                 name: "Turnovers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BillId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    BillId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,14 +143,14 @@ namespace OCBManager.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BillClasses_TurnoverSheetId",
+                table: "BillClasses",
+                column: "TurnoverSheetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bills_BillClassId",
                 table: "Bills",
                 column: "BillClassId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bills_TurnoverSheetId",
-                table: "Bills",
-                column: "TurnoverSheetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IncomingBalances_BillId",

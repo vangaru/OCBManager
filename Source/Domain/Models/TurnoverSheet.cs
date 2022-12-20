@@ -2,16 +2,10 @@
 {
     public class TurnoverSheet : BillsSummaryBase
     {
-        private string? _id;
         private string? _name;
-        private DateTime? _startOfThePeriod;
-        private DateTime? _endOfThePeriod;
+        private string? _filePath;
 
-        public string Id
-        {
-            get => _id ?? throw new ApplicationException("TurnoverSheet.Id is not defined.");
-            set => _id = value;
-        }
+        public int Id { get; set; }
 
         public string Name
         {
@@ -19,16 +13,12 @@
             set => _name = value;
         }
 
-        public DateTime StartOfThePeriod
+        public string FilePath
         {
-            get => _startOfThePeriod ?? throw new ApplicationException("TurnoverSheet.StartOfThePeriod is not defined.");
-            set => _startOfThePeriod = value;
+            get => _filePath ?? throw new ApplicationException("TurnoverSheet.FilePath is not defined.");
+            set => _filePath = value;
         }
 
-        public DateTime EndOfThePeriod
-        {
-            get => _endOfThePeriod ?? throw new ApplicationException("TurnoverSheet.EndOfThePeriod is not defined.");
-            set => _endOfThePeriod = value;
-        }
+        public List<BillClass> BillClasses { get; set; } = new();
     }
 }

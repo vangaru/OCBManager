@@ -4,15 +4,9 @@ namespace OCBManager.Domain.Models
 {
     public class Turnover
     {
-        private string? _id;
-        private string? _billId;
         private Bill? _bill;
 
-        public string Id
-        {
-            get => _id ?? throw new ApplicationException("Turnover.Id");
-            set => _id = value;
-        }
+        public int Id { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Debit { get; set; }
@@ -20,11 +14,7 @@ namespace OCBManager.Domain.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Credit { get; set; }
 
-        public string BillId
-        {
-            get => _billId ?? throw new ApplicationException("Turnover.BillId is not defined.");
-            set => _billId = value;
-        }
+        public int BillId { get; set; }
 
         public Bill Bill
         {

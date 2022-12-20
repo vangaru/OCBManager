@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OCBManager.Data.Data;
 
@@ -10,9 +11,11 @@ using OCBManager.Data.Data;
 namespace OCBManager.API.Migrations
 {
     [DbContext(typeof(OCBContext))]
-    partial class OCBContextModelSnapshot : ModelSnapshot
+    [Migration("20221220214238_FixOneToOneRelations")]
+    partial class FixOneToOneRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

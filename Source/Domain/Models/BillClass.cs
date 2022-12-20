@@ -2,14 +2,10 @@
 {
     public class BillClass : BillsSummaryBase
     {
-        private string? _id;
         private string? _name;
+        private TurnoverSheet? _turnoverSheet;
 
-        public string Id
-        {
-            get => _id ?? throw new ApplicationException("BillClass.Id is not defined.");
-            set => _id = value;
-        }
+        public int Id { get; set; }
 
         public string Name
         {
@@ -18,5 +14,13 @@
         }
 
         public List<Bill> Bills { get; set; } = new();
+
+        public int TurnoverSheetId { get; set; }
+
+        public TurnoverSheet TurnoverSheet
+        {
+            get => _turnoverSheet ?? throw new ApplicationException("BillClass.TurnoverSheet is not defined");
+            set => _turnoverSheet = value;
+        }
     }
 }
