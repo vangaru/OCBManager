@@ -1,0 +1,35 @@
+<div class="p-card m-5">
+    <p-table [value]="turnoverSheet" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        responsiveLayout="scroll" styleClass="p-datatable-striped" scrollDirection="both">
+        <ng-template pTemplate="caption">
+            <span class="text-3xl">OCB Баланс</span>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="2" colspan="2">Название</th>
+                <th colspan="2">Входящее сальдо</th>
+                <th colspan="2">Оборот</th>
+                <th colspan=2>Исходящее сальдо</th>
+            </tr>
+            <tr>
+                <th>Актив</th>
+                <th>Пассив</th>
+                <th>Дебет</th>
+                <th>Кредет</th>
+                <th>Актив</th>
+                <th>Пассив</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sheet>
+            <tr>
+                <td colspan="2"><a [routerLink]="['/sheet', sheet.id]">{{sheet.name | slice:0:20}}</a></td>
+                <td>{{sheet.incomingBalanceActive}}</td>
+                <td>{{sheet.incomingBalancePassive}}</td>
+                <td>{{sheet.turnoverDebit}}</td>
+                <td>{{sheet.turnoverCredit}}</td>
+                <td>{{sheet.outgoingBalanceActive}}</td>
+                <td>{{sheet.outgoingBalancePassive}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
