@@ -27,7 +27,8 @@ namespace OCBManager.Data.Stores
 
         public async Task<TurnoverSheet> GetTurnoverSheetAsync(int id)
         {
-            return new TurnoverSheet();
+            return await _context.TurnoverSheets.Include(sheet => sheet.BillClasses)
+                .ThenInclude(billClass => billClass.Bills).FirstAsync(sheet => sheet.Id == id);
         }
     }
 }

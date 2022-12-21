@@ -50,10 +50,11 @@ namespace OCBManager.API.Controllers
         }
 
         [HttpGet]
+        [Route("{id}")]
         public async Task<ActionResult<TurnoverSheetDetailsDTO>> GetTurnoverSheetAsync(int id)
         {
-
-            return Ok();
+            TurnoverSheet turnoverSheet = await _turnoverSheetStore.GetTurnoverSheetAsync(id);
+            return Ok(DTOMapper.GetTurnoverSheetDetails(turnoverSheet));
         }
     }
 }
