@@ -1,4 +1,5 @@
-﻿using OCBManager.Data.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OCBManager.Data.Data;
 using OCBManager.Domain.Models;
 using OCBManager.Domain.Stores;
 
@@ -17,6 +18,16 @@ namespace OCBManager.Data.Stores
         {
             _context.Add(turnoverSheet);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<TurnoverSheet>> GetTurnoverSheetAsync()
+        {
+            return await _context.TurnoverSheets.ToListAsync();
+        }
+
+        public async Task<TurnoverSheet> GetTurnoverSheetAsync(int id)
+        {
+            return new TurnoverSheet();
         }
     }
 }

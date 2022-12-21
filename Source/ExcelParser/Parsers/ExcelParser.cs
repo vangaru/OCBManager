@@ -184,21 +184,12 @@ namespace OCBManager.ExcelParser.Parsers
                 var bill = new Bill
                 {
                     BillNumber = ConvertObject<int>(values[i, 0]),
-                    IncomingBalance = new IncomingBalance
-                    {
-                        Active = ConvertObject<decimal>(values[i, 1]),
-                        Passive = ConvertObject<decimal>(values[i, 2])
-                    },
-                    Turnover = new Turnover
-                    {
-                        Debit = ConvertObject<decimal>(values[i, 3]),
-                        Credit = ConvertObject<decimal>(values[i, 4])
-                    },
-                    OutgoingBalance = new OutgoingBalance
-                    {
-                        Active = ConvertObject<decimal>(values[i, 5]),
-                        Passive = ConvertObject<decimal>(values[i, 6])
-                    }
+                    IncomingBalanceActive = ConvertObject<decimal>(values[i, 1]),
+                    IncomingBalancePassive = ConvertObject<decimal>(values[i, 2]),
+                    TurnoverDebit = ConvertObject<decimal>(values[i, 3]),
+                    TurnoverCredit = ConvertObject<decimal>(values[i, 4]),
+                    OutgoingBalanceActive = ConvertObject<decimal>(values[i, 5]),
+                    OutgoingBalancePassive = ConvertObject<decimal>(values[i, 6])
                 };
 
                 billClass.Bills.Add(bill);

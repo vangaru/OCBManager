@@ -11,7 +11,7 @@ using OCBManager.Data.Data;
 namespace OCBManager.API.Migrations
 {
     [DbContext(typeof(OCBContext))]
-    [Migration("20221220212607_InitialMigration")]
+    [Migration("20221221170017_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -38,14 +38,23 @@ namespace OCBManager.API.Migrations
                     b.Property<int>("BillNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("IncomingBalanceId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("IncomingBalanceActive")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int>("OutgoingBalanceId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("IncomingBalancePassive")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int>("TurnoverId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("OutgoingBalanceActive")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("OutgoingBalancePassive")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("TurnoverCredit")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("TurnoverDebit")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
@@ -92,81 +101,6 @@ namespace OCBManager.API.Migrations
                     b.HasIndex("TurnoverSheetId");
 
                     b.ToTable("BillClasses");
-                });
-
-            modelBuilder.Entity("OCBManager.Domain.Models.IncomingBalance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Active")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Passive")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId")
-                        .IsUnique();
-
-                    b.ToTable("IncomingBalances");
-                });
-
-            modelBuilder.Entity("OCBManager.Domain.Models.OutgoingBalance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Active")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Passive")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId")
-                        .IsUnique();
-
-                    b.ToTable("OutgoingBalances");
-                });
-
-            modelBuilder.Entity("OCBManager.Domain.Models.Turnover", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Credit")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Debit")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId")
-                        .IsUnique();
-
-                    b.ToTable("Turnovers");
                 });
 
             modelBuilder.Entity("OCBManager.Domain.Models.TurnoverSheet", b =>
@@ -222,7 +156,7 @@ namespace OCBManager.API.Migrations
             modelBuilder.Entity("OCBManager.Domain.Models.BillClass", b =>
                 {
                     b.HasOne("OCBManager.Domain.Models.TurnoverSheet", "TurnoverSheet")
-                        .WithMany()
+                        .WithMany("BillClasses")
                         .HasForeignKey("TurnoverSheetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -230,54 +164,14 @@ namespace OCBManager.API.Migrations
                     b.Navigation("TurnoverSheet");
                 });
 
-            modelBuilder.Entity("OCBManager.Domain.Models.IncomingBalance", b =>
-                {
-                    b.HasOne("OCBManager.Domain.Models.Bill", "Bill")
-                        .WithOne("IncomingBalance")
-                        .HasForeignKey("OCBManager.Domain.Models.IncomingBalance", "BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bill");
-                });
-
-            modelBuilder.Entity("OCBManager.Domain.Models.OutgoingBalance", b =>
-                {
-                    b.HasOne("OCBManager.Domain.Models.Bill", "Bill")
-                        .WithOne("OutgoingBalance")
-                        .HasForeignKey("OCBManager.Domain.Models.OutgoingBalance", "BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bill");
-                });
-
-            modelBuilder.Entity("OCBManager.Domain.Models.Turnover", b =>
-                {
-                    b.HasOne("OCBManager.Domain.Models.Bill", "Bill")
-                        .WithOne("Turnover")
-                        .HasForeignKey("OCBManager.Domain.Models.Turnover", "BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bill");
-                });
-
-            modelBuilder.Entity("OCBManager.Domain.Models.Bill", b =>
-                {
-                    b.Navigation("IncomingBalance")
-                        .IsRequired();
-
-                    b.Navigation("OutgoingBalance")
-                        .IsRequired();
-
-                    b.Navigation("Turnover")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("OCBManager.Domain.Models.BillClass", b =>
                 {
                     b.Navigation("Bills");
+                });
+
+            modelBuilder.Entity("OCBManager.Domain.Models.TurnoverSheet", b =>
+                {
+                    b.Navigation("BillClasses");
                 });
 #pragma warning restore 612, 618
         }
