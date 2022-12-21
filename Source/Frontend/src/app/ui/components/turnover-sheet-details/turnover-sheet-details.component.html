@@ -1,6 +1,11 @@
+<div class="grid">
+    <div class="col-12">
+      <button pButton type="button" icon="pi pi-arrow-left" label="Назад" class="p-button-link" [routerLink]="['/sheet']"></button>  
+    </div>
+</div>
+
 <div class="p-card m-5">
-    <p-table [value]="billClasses" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-    responsiveLayout="scroll" styleClass="p-datatable-striped" scrollDirection="both" dataKey="id">
+    <p-table [value]="billClasses" responsiveLayout="scroll" styleClass="p-datatable-striped" scrollDirection="both" dataKey="id">
         <ng-template pTemplate="caption">
             <span>{{sheetDetails?.name}}</span>
         </ng-template>
@@ -20,6 +25,15 @@
                 <th>Актив</th>
                 <th>Пассив</th>
             </tr>
+            <tr>
+                <th><b>БАЛАНС</b></th>
+                <th><b>{{sheetDetails?.incomingBalanceActive | number:'4.1-5'}}</b></th>
+                <th><b>{{sheetDetails?.incomingBalancePassive | number:'4.1-5'}}</b></th>
+                <th><b>{{sheetDetails?.turnoverDebit | number:'4.1-5'}}</b></th>
+                <th><b>{{sheetDetails?.turnoverCredit | number:'4.1-5'}}</b></th>
+                <th><b>{{sheetDetails?.outgoingBalanceActive | number:'4.1-5'}}</b></th>
+                <th><b>{{sheetDetails?.outgoingBalancePassive | number:'4.1-5'}}</b></th>
+            </tr>
         </ng-template>
         <ng-template pTemplate="body" let-billClass let-expanded="expanded">
             <tr>
@@ -32,12 +46,12 @@
                 <td>
                     <button type="button" pButton pRipple [pRowToggler]="billClass" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                 </td>
-                <td><b>{{billClass.incomingBalanceActive}}</b></td>
-                <td><b>{{billClass.incomingBalancePassive}}</b></td>
-                <td><b>{{billClass.turnoverDebit}}</b></td>
-                <td><b>{{billClass.turnoverCredit}}</b></td>
-                <td><b>{{billClass.outgoingBalanceActive}}</b></td>
-                <td><b>{{billClass.outgoingBalancePassive}}</b></td>
+                <td><b>{{billClass.incomingBalanceActive | number:'4.1-5'}}</b></td>
+                <td><b>{{billClass.incomingBalancePassive | number:'4.1-5'}}</b></td>
+                <td><b>{{billClass.turnoverDebit | number:'4.1-5'}}</b></td>
+                <td><b>{{billClass.turnoverCredit | number:'4.1-5'}}</b></td>
+                <td><b>{{billClass.outgoingBalanceActive | number:'4.1-5'}}</b></td>
+                <td><b>{{billClass.outgoingBalancePassive | number:'4.1-5'}}</b></td>
             </tr>
         </ng-template>
         <ng-template pTemplate="rowexpansion" let-billClass>
@@ -63,13 +77,24 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-bill>
                             <tr>
-                                <td>{{bill.billNumber}}</td>
-                                <td>{{bill.incomingBalanceActive}}</td>
-                                <td>{{bill.incomingBalancePassive}}</td>
-                                <td>{{bill.turnoverDebit}}</td>
-                                <td>{{bill.turnoverCredit}}</td>
-                                <td>{{bill.outgoingBalanceActive}}</td>
-                                <td>{{bill.outgoingBalancePassive}}</td>
+                                <ng-container *ngIf="bill.billNumber.toString().length === 2">
+                                    <td><b>{{bill.billNumber}}</b></td>
+                                    <td><b>{{bill.incomingBalanceActive | number:'4.1-5'}}</b></td>
+                                    <td><b>{{bill.incomingBalancePassive | number:'4.1-5'}}</b></td>
+                                    <td><b>{{bill.turnoverDebit | number:'4.1-5'}}</b></td>
+                                    <td><b>{{bill.turnoverCredit | number:'4.1-5'}}</b></td>
+                                    <td><b>{{bill.outgoingBalanceActive | number:'4.1-5'}}</b></td>
+                                    <td><b>{{bill.outgoingBalancePassive | number:'4.1-5'}}</b></td>
+                                </ng-container>
+                                <ng-container *ngIf="bill.billNumber.toString().length !== 2">
+                                    <td>{{bill.billNumber}}</td>
+                                    <td>{{bill.incomingBalanceActive | number:'4.1-5'}}</td>
+                                    <td>{{bill.incomingBalancePassive | number:'4.1-5'}}</td>
+                                    <td>{{bill.turnoverDebit | number:'4.1-5'}}</td>
+                                    <td>{{bill.turnoverCredit | number:'4.1-5'}}</td>
+                                    <td>{{bill.outgoingBalanceActive | number:'4.1-5'}}</td>
+                                    <td>{{bill.outgoingBalancePassive | number:'4.1-5'}}</td>
+                                </ng-container>
                             </tr>
                         </ng-template>
                     </p-table>
