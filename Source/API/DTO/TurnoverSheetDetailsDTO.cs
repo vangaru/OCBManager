@@ -11,6 +11,7 @@
         List<BillClassDTO> BillClasses);
 
     public record BillClassDTO(
+        int Id,
         string Name,
         decimal IncomingBalanceActive,
         decimal IncomingBalancePassive,

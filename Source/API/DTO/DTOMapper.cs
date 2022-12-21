@@ -27,7 +27,7 @@ namespace OCBManager.API.DTO
         private static List<BillClassDTO> GetBillClassDTOs(List<BillClass> billClasses)
         {
             return billClasses.Select(billClass => new BillClassDTO(
-                billClass.Name,
+                billClass.Id, billClass.Name,
                 billClass.IncomingBalanceActive, billClass.IncomingBalancePassive,
                 billClass.TurnoverDebit, billClass.TurnoverCredit,
                 billClass.OutgoingBalanceActive, billClass.OutgoingBalancePassive,
