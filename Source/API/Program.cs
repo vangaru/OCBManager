@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
+using OCBManager.API.Extensions;
 using OCBManager.API.FileReaders;
 using OCBManager.Data.Data;
 using OCBManager.Data.Stores;
@@ -56,6 +57,7 @@ namespace OCBManager.API
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader());
 
             app.MapControllers();
+            app.UseGlobalExceptionHandling();
 
             app.Run();
         }

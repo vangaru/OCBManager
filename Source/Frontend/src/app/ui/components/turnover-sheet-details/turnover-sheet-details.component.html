@@ -7,7 +7,12 @@
 <div class="p-card m-5">
     <p-table [value]="billClasses" responsiveLayout="scroll" styleClass="p-datatable-striped" scrollDirection="both" dataKey="id">
         <ng-template pTemplate="caption">
-            <span>{{sheetDetails?.name}}</span>
+            <div class="flex">
+                <span>{{sheetDetails?.name}}</span>
+                <div class="ml-auto">
+                    <button pButton type="button" class="p-button-success" label="Загруть как JSON" (click)="downloadAsJson()"></button>
+                </div>
+            </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>

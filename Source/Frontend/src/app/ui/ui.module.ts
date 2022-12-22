@@ -20,6 +20,7 @@ import {TagModule} from "primeng/tag";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {FieldsetModule} from "primeng/fieldset";
+import {FileUploadModule} from "primeng/fileupload";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {FieldsetModule} from "primeng/fieldset";
     CheckboxModule,
     TagModule,
     InputTextareaModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FileUploadModule
   ]
 })
 export class UiModule { }

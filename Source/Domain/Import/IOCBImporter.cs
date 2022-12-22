@@ -4,6 +4,6 @@ namespace OCBManager.Domain.Import
 {
     public interface IOCBImporter
     {
-        public Task ImportAsync(FileData fileData);
+        public Task<int> ImportAsync(FileData fileData);
     }
 }

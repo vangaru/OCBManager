@@ -14,6 +14,7 @@ namespace OCBManager.ExcelParser.Parsers
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             
+            // EPPlus cannot handle .xls files.
             string xlsxPath = IsXlsFile(path) 
                 ? ConvertToXlsx(path) 
                 : path;

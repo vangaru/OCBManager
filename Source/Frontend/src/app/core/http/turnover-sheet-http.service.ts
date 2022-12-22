@@ -19,4 +19,8 @@ export class TurnoverSheetHttpService {
   public fetchTurnoverSheet(id: number): Observable<TurnoverSheetDetailsDto> {
     return this.httpClient.get<TurnoverSheetDetailsDto>(`${this.config.serverBaseUrl}/${id}`);
   }
+
+  public uploadOcbFile(formData: FormData): Observable<any> {
+    return this.httpClient.post(this.config.serverBaseUrl, formData);
+  }
 }

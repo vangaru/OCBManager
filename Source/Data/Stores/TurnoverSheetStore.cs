@@ -14,10 +14,11 @@ namespace OCBManager.Data.Stores
             _context = context;
         }
 
-        public async Task AddAsync(TurnoverSheet turnoverSheet)
+        public async Task<int> AddAsync(TurnoverSheet turnoverSheet)
         {
             _context.Add(turnoverSheet);
             await _context.SaveChangesAsync();
+            return turnoverSheet.Id;
         }
 
         public async Task<List<TurnoverSheet>> GetTurnoverSheetAsync()

@@ -18,12 +18,12 @@ namespace OCBManager.Domain.Import
             _turnoverSheetStore = turnoverSheetStore;
         }
 
-        public async Task ImportAsync(FileData fileData)
+        public async Task<int> ImportAsync(FileData fileData)
         {
             string path = await _fileStorage.SaveAsync(fileData);
             TurnoverSheet turnoverSheet = _sheetParser.Parse(path);
             turnoverSheet.FilePath = path;
-            await _turnoverSheetStore.AddAsync(turnoverSheet);
+            return await _turnoverSheetStore.AddAsync(turnoverSheet);
         }
     }
 }
